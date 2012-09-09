@@ -83,7 +83,7 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	if (section >= [dataArr count]) {
-		return 0;//默认的最后一个section
+		return 1;//默认的最后一个section
 	}
    NSDictionary* subSecDataDic = [dataArr safeObjectAtIndex:section];
 	NSArray *subCellData = [subSecDataDic objectForKey:ksRowArrKey];
@@ -324,10 +324,22 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 	NSLog(@"button pressed!");
 	reloadAll = NO;
 	
-	NSIndexPath *oriIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+	
+	NSIndexPath *oriIndex  = nil;
+
 	[self reloadData];
 	[self beginUpdates];
+	if (sender.foldedstatus == OpTableViewHeaderCellStatusUnFolded) {
+		oriIndex  = [NSIndexPath indexPathForRow:0 inSection:sender.sectionIndex];
+	}
+	else
+	{
+		NSInteger scorIndexSecton = ( sender.sectionIndex==0 ? 0:sender.sectionIndex-1);
+		oriIndex  = [NSIndexPath indexPathForRow:0 inSection:scorIndexSecton];
+	}
+	
 	[self scrollToRowAtIndexPath:oriIndex atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
 	[self endUpdates];
 	reloadAll = YES;
 }
