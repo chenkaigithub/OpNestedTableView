@@ -11,5 +11,6 @@
 @interface OpTableViewCell : UITableViewCell
 
 -(void)confirgCell:(NSDictionary*)cellInfo;
+- (CGFloat)cellHeight;
 
 @end

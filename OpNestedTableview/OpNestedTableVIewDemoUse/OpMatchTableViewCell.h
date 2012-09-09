@@ -54,8 +54,8 @@ typedef enum {
 
 @property (nonatomic, assign) CGRect cellSize;
 
-- (CGFloat)cellHeight;
--(void)confirgCell:(NSDictionary*)cellInfo;
+//- (CGFloat)cellHeight;
+//-(void)confirgCell:(NSDictionary*)cellInfo;
 
 - (void)setCusData:(NSDictionary *)item andType:(NSString *)segtype;
 

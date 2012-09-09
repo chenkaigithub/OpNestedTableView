@@ -31,4 +31,11 @@
 	#warning 必须重载此函数
 	NSLog(@"\n 必须在你的子类中重载此函数  \"%@\" ，否则 得不到正确的结果", NSStringFromSelector(_cmd));
 }
+- (CGFloat)cellHeight
+{
+	#warning 动态cell高度使用，必须重载此函数,如果不使用动态 高度，重载并返回与heightforcell中相同的值
+	NSLog(@"\n 必须在你的子类中重载此函数  \"%@\" ，否则 得不到正确的结果", NSStringFromSelector(_cmd));
+
+	return 0;
+}
 @end

@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
 	 JustTestDemo = [[OpNestedTableView alloc] initWithFrame:self.view.bounds];
-
+	JustTestDemo.tableCellClassName = @"OpMatchTableViewCell";
 	[self.view addSubview:JustTestDemo];
 	
 	[self downloadData];

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OpTableViewHeaderCell.h"
-#import "OpMatchTableViewCell.h"
+#import "OpTableViewCell.h"
 
 #define ksSectionDicKey @"title" // change with you ownkey words
 #define ksRowArrKey @"cell"
@@ -45,6 +45,8 @@
 }
 
 @property(nonatomic,retain)NSArray *dataArr;
+@property(nonatomic,retain)NSString *tableCellClassName;
+@property(nonatomic,retain)NSString *tableSectionHeaderClassName;
 /*cellstack data structure
  [
 	 {

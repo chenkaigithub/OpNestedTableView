@@ -265,9 +265,10 @@
 }
 -(void)confirgCell:(NSDictionary*)cellInfo;
 {
-	NSString *segtype = [cellInfo objectForKey:ksDataDicTypeKey];
-	NSDictionary *segContentDic = [cellInfo objectForKey:ksDataDicContentKey];
-	[self setCusData:segContentDic andType:segtype];
+	
+    //这里由于API中缺少，自行添加，，
+	NSString *segtype =@"single";
+	[self setCusData:cellInfo andType:segtype];
 }
 
 - (void)setCusData:(NSDictionary *)item andType:(NSString *)segtype

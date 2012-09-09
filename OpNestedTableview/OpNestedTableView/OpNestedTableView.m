@@ -14,6 +14,23 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 @implementation OpNestedTableView
 
 @synthesize dataArr;
+@synthesize tableCellClassName = _tableCellClassName, tableSectionHeaderClassName = _tableSectionHeaderClassName;
+
+-(NSString*)tableCellClassName
+{
+	if (_tableCellClassName == nil) {
+		_tableCellClassName = @"OpTableViewCell";
+	}
+	return _tableCellClassName;
+}
+
+-(NSString*)tableSectionHeaderClassName
+{
+	if (_tableSectionHeaderClassName == nil) {
+		_tableSectionHeaderClassName = @"OpTableViewHeaderCell";
+	}
+	return _tableSectionHeaderClassName;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -133,7 +150,8 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 			subSecDataDic = [dataArr safeObjectAtIndex:section];
 		}
 		
-		header = [[OpTableViewHeaderCell alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width,kfSectionHeight)];
+		header = [[NSClassFromString(self.tableSectionHeaderClassName) alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width,kfSectionHeight)];
+		
 		header.delegate = self;
 		header.sectionIndex = section;
 		[header confirgSection:subSecDataDic];
@@ -165,7 +183,7 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 		return 0;
 	}
 	
-	OpMatchTableViewCell *cell = [rowStack safeObjectAtIndex:indexPath.row];
+	OpTableViewCell *cell = [rowStack safeObjectAtIndex:indexPath.row];
 	if (!reloadAll) {
 		OpTableViewHeaderCell *header = [secStack objectForKey:ksCellStackHeaderKey];
 		if (header != nil) {
@@ -178,7 +196,7 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
     if (cell == nil  ) {
 	
 		//config cell
-       cell = [[OpMatchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+       cell = [[NSClassFromString(self.tableCellClassName) alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		//get data
@@ -186,9 +204,7 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 		NSArray *subCellData = [subSecDataDic objectForKey:ksRowArrKey];
 		//config
 		NSDictionary *oriDic = [subCellData safeObjectAtIndex:indexPath.row];
-		NSDictionary *finaldic = [NSDictionary dictionaryWithObjectsAndKeys:oriDic,ksDataDicContentKey,
-																			@"single",ksDataDicTypeKey, nil];
-        [cell confirgCell:finaldic];
+		[cell confirgCell:oriDic];
 		
 		//add to stack
 		[rowStack replaceObjectAtIndex:indexPath.row withObject:cell];
@@ -205,20 +221,20 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
 	
 	NSMutableArray *rowStack = [secStack objectForKey:ksCellStackRowArrKey];
 	
-	OpMatchTableViewCell *cell =nil;
+	OpTableViewCell *cell =nil;
 	
 	if (indexPath.section >= [dataArr count]) {
 		//默认的最后一个section
 		if (dataArr.count <= 0) {
 			static NSString *LoadingCellIdentifier =@"加载中";
-			cell = [[OpMatchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoadingCellIdentifier];
+			cell = [[NSClassFromString(self.tableCellClassName) alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoadingCellIdentifier];
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			[cell confirgCell:nil];
 			
 		}
 		else
 		{
-			cell = (OpMatchTableViewCell*)[[UITableViewCell alloc]  initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defalut"];
+			cell = (OpTableViewCell*)[[UITableViewCell alloc]  initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defalut"];
 			[cell setBackgroundColor:[UIColor whiteColor]];
 		}
 		//add to stack
@@ -234,7 +250,7 @@ static NSString *CellIdentifier = @"OpCellIndentifier";
     if (cell == nil  ) {
 		
 		//config cell
-		cell = [[OpMatchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[NSClassFromString(self.tableCellClassName) alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		//get data
